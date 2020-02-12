@@ -1,0 +1,55 @@
+program Project1;
+
+{$APPTYPE CONSOLE}
+
+{$R *.res}
+
+uses
+  System.SysUtils,
+  task_2 in 'task_2.pas';
+
+  var tree: TTree;
+      item: Variant;
+
+begin
+  try
+    tree := TTree.__init__(20);
+
+    assert(tree.ToString = '20');
+    writeln('Tree: ' + tree.ToString + ' == 20');
+
+    tree.add(40);
+    tree.add(10);
+    tree.add(5);
+    tree.add(15);
+    tree.add(4);
+    tree.add(7);
+
+    assert(tree.Max = 40);
+    writeln('MAX: ' + IntToStr(tree.Max) + ' == 40');
+
+    assert(tree.Low = 4);
+    writeln('MIN: ' + IntToStr(tree.Low) + ' == 4');
+
+    assert(tree.Right.Parent = tree);
+    writeln('Self.Right.Parent = Self');
+
+    write('Как сортированый массив: [ ' );
+    for item in tree.AsArray do
+      write(IntToStr(item) + ', ');
+    write(']');
+
+    writeln(^M + ^J + 'Как JSON(не сбалансированное)');
+    writeln(tree.build_json);
+
+    assert(true = tree.entry_check(10));
+    writeln('10 in Tree: ', tree.entry_check(10));
+
+    tree.find(6).balance;
+    writeln('Press enter to continue...');
+    ReadLn(input);
+  except
+    on E: Exception do
+      Writeln(E.ClassName, ': ', E.Message);
+  end;
+end.

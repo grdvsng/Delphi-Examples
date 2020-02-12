@@ -1,0 +1,17 @@
+program Project1;
+
+uses
+  Vcl.Forms,
+  __form__ in '__form__.pas' {MainView},
+  task_1 in 'task_1.pas',
+  wizard1 in 'wizard1.pas' {Push_Item_Wizard};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TMainView, MainView);
+  Application.CreateForm(TPush_Item_Wizard, Push_Item_Wizard);
+  Application.Run;
+end.

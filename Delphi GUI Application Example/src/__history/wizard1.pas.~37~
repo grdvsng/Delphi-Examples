@@ -1,0 +1,186 @@
+unit wizard1;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Grids,
+  Vcl.CategoryButtons, Vcl.ButtonGroup, BookPushFrame, MagazinePushFrame, task_1;
+
+type
+  PushNewItemInGoods = procedure(item: TGoods) of object;
+
+type
+  TPush_Item_Wizard = class(TForm)
+    LinkLabel2:   TLinkLabel;
+    Item_Type:    TComboBox;
+    AcceptButton: TButton;
+    CancelButton: TButton;
+    BookFrame:    TFrame1;
+    MagazineFrame:TFrame2;
+
+    procedure FormCreate(Sender: TObject);
+    procedure Show(_master: TForm; _master_push_in_grid: PushNewItemInGoods);
+    procedure CancelButtonClick(Sender: TObject);
+    procedure Item_TypeChange(Sender: TObject);
+    procedure IntegerRequiredChecker(inp: TLabeledEdit);
+    procedure BasicLogicChecker;
+    procedure MagazineFramePriceEditChange(Sender: TObject);
+    procedure BookFramePriceEditChange(Sender: TObject);
+    procedure FormMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
+    procedure AcceptButtonClick(Sender: TObject);
+    procedure StringGrid1Click(Sender: TObject);
+    procedure MagazineFrameNumberEditChange(Sender: TObject);
+    procedure ClearEdits;
+
+  private
+    master:              TForm;
+    active_frame:        TFrame;
+    activate:            bool;
+    master_push_in_grid: PushNewItemInGoods;
+
+    function requiredNotEmpty: Bool;
+  public
+    { Public declarations }
+  end;
+
+var
+  Push_Item_Wizard: TPush_Item_Wizard;
+
+implementation
+
+{$R *.dfm}
+  uses
+    System.RegularExpressions;
+
+  procedure TPush_Item_Wizard.AcceptButtonClick(Sender: TObject);
+  var data: TGoods;
+  begin
+      if self.active_frame = self.BookFrame then
+        begin self.BookFrame.set_obj;
+              data := self.BookFrame.obj; end
+      else
+        begin self.MagazineFrame.set_obj;
+              data := self.BookFrame.obj; end;
+
+      self.master_push_in_grid(data);
+      self.CancelButtonClick(Sender);
+  end;
+
+  procedure TPush_Item_Wizard.BasicLogicChecker;
+  begin
+     if self.requiredNotEmpty then
+     begin  self.AcceptButton.Enabled := True;  end
+     else
+     begin  self.AcceptButton.Enabled := False; end;
+  end;
+
+  procedure TPush_Item_Wizard.BookFramePriceEditChange(Sender: TObject);
+  begin
+      self.IntegerRequiredChecker(Sender As TLabeledEdit);
+  end;
+
+  // Закрываем форму
+  procedure TPush_Item_Wizard.CancelButtonClick(Sender: TObject);
+  begin
+     self.Item_Type.Text := '';
+     self.master.Enabled := True;
+
+     self.Item_TypeChange(Sender);
+
+     self.CleanupInstance;
+     self.Close;
+  end;
+
+  procedure TPush_Item_Wizard.FormCreate(Sender: TObject);
+  begin
+    self.Item_Type.Items.add('Book');
+    self.Item_Type.Items.add('Magazine');
+  end;
+
+  procedure TPush_Item_Wizard.FormMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
+  begin
+    if (self.activate = True) and (self.active_frame.Visible) then
+      self.BasicLogicChecker;
+  end;
+
+// Открываем фрейм соответствующий вводимым данным
+  procedure TPush_Item_Wizard.Item_TypeChange(Sender: TObject);
+  begin
+    if (self.Item_Type.Text = 'Book') or (self.Item_Type.Text = 'Magazine') then
+    begin
+      if Item_Type.Text = 'Book' then
+        begin self.BookFrame.Visible := True;
+              self.active_frame      := self.BookFrame; end
+      else
+        begin self.BookFrame.Visible := False; end;
+
+      if Item_Type.Text = 'Magazine' then
+        begin self.MagazineFrame.Visible := True;
+              self.active_frame          := self.MagazineFrame end
+      else
+        begin self.MagazineFrame.Visible := False; end;
+
+      self.activate := True; end
+    else
+      begin Item_Type.Text := 'Choose Item type';
+            self.activate  := False; end;
+  end;
+
+  procedure TPush_Item_Wizard.ClearEdits;
+  var i: integer;
+  begin
+    for i := 0 to self.ComponentCount - 1 do
+      if self.Components[i] is TLabeledEdit then TLabeledEdit(self.Components[i]).Clear;
+  end;
+
+  procedure TPush_Item_Wizard.MagazineFrameNumberEditChange(Sender: TObject);
+  begin
+    self.IntegerRequiredChecker(Sender As TLabeledEdit);
+  end;
+
+procedure TPush_Item_Wizard.MagazineFramePriceEditChange(Sender: TObject);
+  begin
+    self.IntegerRequiredChecker(Sender As TLabeledEdit);
+  end;
+
+  procedure TPush_Item_Wizard.Show(_master: TForm;  _master_push_in_grid: PushNewItemInGoods);
+      begin
+        self.master              := _master;
+        self.master.Enabled      := False;
+        self.Visible             := True;
+        self.master_push_in_grid := _master_push_in_grid;
+      end;
+
+    procedure TPush_Item_Wizard.StringGrid1Click(Sender: TObject);
+  begin
+
+end;
+
+// Ввод только цифры
+  procedure TPush_Item_Wizard.IntegerRequiredChecker(inp: TLabeledEdit);
+     var re: TRegEx;
+  begin
+    re           := TRegEx.Create('[^0-9]');
+    inp.Text     := re.Replace(inp.Text, '');
+    inp.SelStart := Length(inp.Text);
+  end;
+
+  function TPush_Item_Wizard.requiredNotEmpty: Bool;
+  begin
+    if self.active_frame = self.BookFrame then
+    begin
+      if (length(self.BookFrame.NameEdit.Text) > 0) and (length(self.BookFrame.PriceEdit.Text) > 0) then
+          begin result := True;  end
+        else
+          begin result := False; end;
+    end else
+    begin
+      if (length(self.MagazineFrame.NameEdit.Text) > 0) and (length(self.MagazineFrame.PriceEdit.Text) > 0) then
+        begin result := True;  end
+      else
+        begin result := False; end;
+    end;
+  end;
+
+  end.

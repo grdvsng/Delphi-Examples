@@ -1,0 +1,74 @@
+object Frame1: TFrame1
+  Left = 0
+  Top = 0
+  Width = 320
+  Height = 121
+  TabOrder = 0
+  object LinkLabel1: TLinkLabel
+    Left = 535
+    Top = 331
+    Width = 53
+    Height = 17
+    Caption = 'LinkLabel1'
+    TabOrder = 0
+  end
+  object NameEdit: TLabeledEdit
+    Left = 16
+    Top = 8
+    Width = 121
+    Height = 21
+    EditLabel.AlignWithMargins = True
+    EditLabel.Width = 32
+    EditLabel.Height = 13
+    EditLabel.Caption = 'Name'
+    EditLabel.Color = clRed
+    EditLabel.Font.Charset = DEFAULT_CHARSET
+    EditLabel.Font.Color = clRed
+    EditLabel.Font.Height = -11
+    EditLabel.Font.Name = 'Tahoma'
+    EditLabel.Font.Style = [fsBold]
+    EditLabel.ParentColor = False
+    EditLabel.ParentFont = False
+    LabelPosition = lpRight
+    TabOrder = 1
+  end
+  object PriceEdit: TLabeledEdit
+    Left = 16
+    Top = 35
+    Width = 121
+    Height = 21
+    EditLabel.Width = 28
+    EditLabel.Height = 13
+    EditLabel.Caption = 'Price'
+    EditLabel.Font.Charset = DEFAULT_CHARSET
+    EditLabel.Font.Color = clRed
+    EditLabel.Font.Height = -11
+    EditLabel.Font.Name = 'Tahoma'
+    EditLabel.Font.Style = [fsBold]
+    EditLabel.ParentFont = False
+    LabelPosition = lpRight
+    TabOrder = 2
+  end
+  object AuthorEdit: TLabeledEdit
+    Left = 16
+    Top = 62
+    Width = 121
+    Height = 21
+    EditLabel.Width = 33
+    EditLabel.Height = 13
+    EditLabel.Caption = 'Author'
+    LabelPosition = lpRight
+    TabOrder = 3
+  end
+  object DescriptionEdit: TLabeledEdit
+    Left = 16
+    Top = 89
+    Width = 121
+    Height = 21
+    EditLabel.Width = 53
+    EditLabel.Height = 13
+    EditLabel.Caption = 'Description'
+    LabelPosition = lpRight
+    TabOrder = 4
+  end
+end

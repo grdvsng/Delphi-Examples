@@ -1,0 +1,105 @@
+object MainView: TMainView
+  Left = 0
+  Top = 123
+  BorderIcons = [biSystemMenu]
+  Caption = 'Task-1'
+  ClientHeight = 164
+  ClientWidth = 511
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poDesigned
+  PixelsPerInch = 96
+  TextHeight = 13
+  object PushOnGrid: TButton
+    Left = 341
+    Top = 32
+    Width = 162
+    Height = 25
+    Caption = 'Push item'
+    TabOrder = 0
+    OnClick = PushOnGridClick
+  end
+  object Goods: TStringGrid
+    Left = 8
+    Top = 31
+    Width = 327
+    Height = 120
+    ColCount = 3
+    Ctl3D = True
+    DefaultColWidth = 106
+    DefaultRowHeight = 20
+    DoubleBuffered = False
+    FixedCols = 0
+    RowCount = 1
+    FixedRows = 0
+    ParentCtl3D = False
+    ParentDoubleBuffered = False
+    TabOrder = 1
+  end
+  object LinkLabel1: TLinkLabel
+    AlignWithMargins = True
+    Left = 8
+    Top = 8
+    Width = 105
+    Height = 17
+    AutoSize = False
+    Caption = 'Name'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -12
+    Font.Name = 'Sitka Text'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 2
+  end
+  object LinkLabel2: TLinkLabel
+    AlignWithMargins = True
+    Left = 225
+    Top = 9
+    Width = 110
+    Height = 17
+    AutoSize = False
+    Caption = 'Description'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -12
+    Font.Name = 'Sitka Text'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 3
+  end
+  object LinkLabel3: TLinkLabel
+    AlignWithMargins = True
+    Left = 119
+    Top = 8
+    Width = 100
+    Height = 17
+    AutoSize = False
+    Caption = 'Price'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -12
+    Font.Name = 'Sitka Text'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 4
+  end
+  object export_to_json: TButton
+    Left = 341
+    Top = 63
+    Width = 162
+    Height = 25
+    Caption = 'Export to JSON'
+    TabOrder = 5
+    OnClick = export_to_jsonClick
+  end
+  object SaveDialog1: TSaveDialog
+    Left = 360
+    Top = 96
+  end
+end

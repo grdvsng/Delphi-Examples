@@ -1,0 +1,25 @@
+unit task_3;
+
+interface
+    type
+      TStudentGroup=class
+
+      end;
+
+    type
+      TTeacher=class
+
+      end;
+
+    type
+      TSubject=class
+
+      end;
+
+    type
+      TLesson=class
+
+      end;
+implementation
+
+end.
